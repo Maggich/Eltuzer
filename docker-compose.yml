@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: eltuzer
+      POSTGRES_PASSWORD: eltuzer_password
+      POSTGRES_DB: eltuzer_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eltuzer"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      DATABASE_URL: postgresql://eltuzer:eltuzer_password@db:5432/eltuzer_db
+      SECRET_KEY: your-secret-key-change-in-production
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8001
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+
