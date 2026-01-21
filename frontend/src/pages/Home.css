@@ -1,52 +1,393 @@
+/* ==================== HOME PAGE ==================== */
 .home {
-  background-color: #ffffff;
-  color: #111111;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  background-color: var(--primary-white);
 }
 
+/* ==================== ГЕРОЙ РАЗДЕЛ ==================== */
 .hero {
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--accent-gray) 100%);
   padding: 100px 0;
   text-align: center;
-  background-color: #ffffff;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 2px solid var(--primary-black);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: movePattern 30s linear infinite;
+}
+
+@keyframes movePattern {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 4.5rem;
+  font-family: 'Playfair Display', serif;
   font-weight: 800;
-  color: #111111;
-  margin-bottom: 20px;
-  letter-spacing: -1px;
+  letter-spacing: 4px;
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.1;
+  position: relative;
+}
+
+.hero-title:first-of-type {
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--primary-black);
+  text-shadow: none;
+  margin: 0;
+  width: 100%;
+}
+
+.hero-title:last-of-type {
+  color: var(--primary-black);
+  position: relative;
+  z-index: 2;
 }
 
 .hero-line {
-  width: 60px;
-  height: 4px;
-  background-color: #003366;
-  margin: 20px auto;
+  width: 120px;
+  height: 3px;
+  background-color: var(--primary-black);
+  margin: 40px auto;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
-  color: #003366;
-  font-weight: 600;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  color: var(--text-dark);
+  font-weight: 300;
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
 .hero-description {
-  color: #555;
+  font-family: 'Lato', sans-serif;
   font-size: 1.1rem;
-  margin-bottom: 40px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  color: var(--text-light);
+  max-width: 550px;
+  margin: 20px auto 40px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ==================== КАТЕГОРИИ ==================== */
+.categories {
+  padding: 100px 0;
+  background-color: var(--primary-white);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 70px;
+  position: relative;
+  padding-bottom: 25px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background-color: var(--primary-black);
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 0;
+}
+
+.category-card {
+  padding: 50px 30px;
+  border: 2px solid var(--border-light);
+  background: linear-gradient(135deg, var(--primary-white) 0%, var(--accent-gray) 100%);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.category-card:hover {
+  border-color: var(--primary-black);
+  background: var(--primary-white);
+  transform: translateY(-12px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.category-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.category-card p {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--text-light);
+  position: relative;
+  z-index: 1;
+}
+
+/* ==================== ПОПУЛЯРНЫЕ ТОВАРЫ ==================== */
+.featured {
+  padding: 100px 0;
+  background: linear-gradient(135deg, var(--accent-gray) 0%, var(--primary-white) 100%);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.product-card {
+  background-color: var(--primary-white);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  border-color: var(--primary-black);
+}
+
+.product-image {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(135deg, var(--accent-gray) 0%, var(--primary-white) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition);
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.08);
+}
+
+.no-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-gray) 0%, var(--primary-white) 100%);
+  color: var(--text-light);
+  font-size: 1rem;
+  font-family: 'Lato', sans-serif;
+}
+
+.product-info {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-info h3 {
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  min-height: 35px;
+  line-height: 1.3;
+}
+
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-top: auto;
+  color: var(--primary-black);
+}
+
+/* ==================== TEXT CENTER ==================== */
+.text-center {
+  text-align: center;
+}
+
+.no-products {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+  font-size: 1.2rem;
+}
+
+/* ==================== АДАПТИВНОСТЬ ==================== */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 0;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .categories, .featured {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+  }
+
+  .products-grid, .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .category-card {
+    padding: 30px 20px;
+    min-height: 150px;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 40px 0;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    letter-spacing: 1.5px;
+  }
+
+  .hero-line {
+    width: 80px;
+    margin: 30px auto;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    max-width: 90%;
+    margin-bottom: 30px;
+  }
+
+  .categories, .featured {
+    padding: 40px 0;
+  }
+
+  .products-grid, .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  .category-card {
+    padding: 25px 15px;
+  }
+
+  .product-card {
+    margin-bottom: 20px;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+
+  .product-info {
+    padding: 20px;
+  }
 }
 
 .categories,

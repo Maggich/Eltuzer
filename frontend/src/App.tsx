@@ -7,6 +7,7 @@ import ProductDetail from './pages/ProductDetail';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
 import Landing from './pages/Landing';
+import FurnitureSet from './pages/FurnitureSet';
 import './App.css';
 
 function AppContent() {
@@ -24,6 +25,7 @@ function AppContent() {
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/manage" element={<Admin />} />
+        <Route path="/furniture-set" element={<FurnitureSet />} />
         <Route path="/admin" element={<Navigate to="/manage" replace />} />
         <Route path="/admin/login" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />

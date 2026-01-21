@@ -23,9 +23,7 @@ const Header: React.FC = () => {
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo">
-            <h1 className="logo-text glow-text">EL TUZER</h1>
-            <div className="logo-line"></div>
-            <p className="logo-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</p>
+            <img src="/Logo.png" alt="EL TUZER Logo" className="logo-image" />
           </Link>
           
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
@@ -35,17 +33,20 @@ const Header: React.FC = () => {
             <Link to="/products" className="nav-link" onClick={() => setIsMenuOpen(false)}>
               Каталог
             </Link>
+            <Link to="/furniture-set" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              Создать гарнитур
+            </Link>
             {isAuthenticated && (
               <Link to="/manage" className="nav-link" onClick={() => setIsMenuOpen(false)}>
                 Управление
               </Link>
             )}
             {!isAuthenticated ? (
-              <Link to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/login" className="nav-link nav-link-auth" onClick={() => setIsMenuOpen(false)}>
                 Вход
               </Link>
             ) : (
-              <button className="nav-link btn-logout" onClick={handleLogout}>
+              <button className="nav-link nav-link-auth" onClick={handleLogout}>
                 Выход
               </button>
             )}
