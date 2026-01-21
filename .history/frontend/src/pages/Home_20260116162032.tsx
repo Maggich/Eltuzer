@@ -31,7 +31,6 @@ const Home: React.FC = () => {
       <section className="hero">
         <div className="container">
           <div className="hero-content">
-            <h1 className="hero-title glow-text">EL TUZER</h1>
             <h1 className="hero-title">EL TUZER</h1>
             <div className="hero-line"></div>
             <p className="hero-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</p>
@@ -54,7 +53,7 @@ const Home: React.FC = () => {
                 <Link
                   key={category.id}
                   to={`/products?category=${category.id}`}
-                  className="category-card glow-border"
+                  className="category-card"
                 >
                   <h3>{category.name}</h3>
                   {category.description && <p>{category.description}</p>}
@@ -76,7 +75,7 @@ const Home: React.FC = () => {
                 <Link
                   key={product.id}
                   to={`/products/${product.id}`}
-                  className="product-card glow-border"
+                  className="product-card"
                 >
                   <div className="product-image">
                     {product.image_url ? (

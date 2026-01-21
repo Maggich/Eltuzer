@@ -38,7 +38,7 @@ const Products: React.FC = () => {
   return (
     <div className="products-page">
       <div className="container">
-        <h1 className="page-title">Каталог товаров</h1>
+        <h1 className="page-title glow-text">Каталог товаров</h1>
 
         <div className="products-filters">
           <button
@@ -66,7 +66,7 @@ const Products: React.FC = () => {
               <Link
                 key={product.id}
                 to={`/products/${product.id}`}
-                className="product-card"
+                className="product-card glow-border"
               >
                 <div className="product-image">
                   {product.image_url ? (
@@ -104,3 +104,4 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+

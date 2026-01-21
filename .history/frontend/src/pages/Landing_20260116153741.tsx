@@ -105,6 +105,9 @@ const Landing: React.FC = () => {
 
   return (
     <div className="landing-page">
+      <div className="landing-background">
+        <div className="landing-particles"></div>
+      </div>
 
       <div className="landing-container">
         {/* Заголовок с акцией */}
@@ -237,3 +240,4 @@ const Landing: React.FC = () => {
 };
 
 export default Landing;
+

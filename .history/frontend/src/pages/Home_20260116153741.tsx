@@ -32,7 +32,6 @@ const Home: React.FC = () => {
         <div className="container">
           <div className="hero-content">
             <h1 className="hero-title glow-text">EL TUZER</h1>
-            <h1 className="hero-title">EL TUZER</h1>
             <div className="hero-line"></div>
             <p className="hero-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</p>
             <p className="hero-description">
@@ -48,7 +47,7 @@ const Home: React.FC = () => {
       {categories.length > 0 && (
         <section className="categories">
           <div className="container">
-            <h2 className="section-title">Категории</h2>
+            <h2 className="section-title glow-text">Категории</h2>
             <div className="categories-grid">
               {categories.map((category) => (
                 <Link
@@ -67,7 +66,7 @@ const Home: React.FC = () => {
 
       <section className="featured">
         <div className="container">
-          <h2 className="section-title">Популярные товары</h2>
+          <h2 className="section-title glow-text">Популярные товары</h2>
           {loading ? (
             <div className="loading">Загрузка...</div>
           ) : featuredProducts.length > 0 ? (
@@ -117,3 +116,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+

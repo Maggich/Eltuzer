@@ -48,6 +48,7 @@ const Home: React.FC = () => {
       {categories.length > 0 && (
         <section className="categories">
           <div className="container">
+            <h2 className="section-title glow-text">Категории</h2>
             <h2 className="section-title">Категории</h2>
             <div className="categories-grid">
               {categories.map((category) => (
@@ -55,6 +56,7 @@ const Home: React.FC = () => {
                   key={category.id}
                   to={`/products?category=${category.id}`}
                   className="category-card glow-border"
+                  className="category-card"
                 >
                   <h3>{category.name}</h3>
                   {category.description && <p>{category.description}</p>}
@@ -67,6 +69,7 @@ const Home: React.FC = () => {
 
       <section className="featured">
         <div className="container">
+          <h2 className="section-title glow-text">Популярные товары</h2>
           <h2 className="section-title">Популярные товары</h2>
           {loading ? (
             <div className="loading">Загрузка...</div>
@@ -77,6 +80,7 @@ const Home: React.FC = () => {
                   key={product.id}
                   to={`/products/${product.id}`}
                   className="product-card glow-border"
+                  className="product-card"
                 >
                   <div className="product-image">
                     {product.image_url ? (
