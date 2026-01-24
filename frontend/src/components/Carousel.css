@@ -1,0 +1,262 @@
+.carousel {
+  margin: 24px 0 0;
+}
+
+.carousel-inner {
+  position: relative;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.fade-in {
+  animation: fadeIn 0.45s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.carousel-slide {
+  position: relative;
+  width: 100%;
+  height: 420px;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #f0f0f0;
+}
+
+.carousel-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9e9e9e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  padding: 16px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.carousel-title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+}
+
+.carousel-subtitle {
+  margin: 0;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.carousel-cta {
+  margin-top: 12px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.carousel-arrow.left {
+  left: 12px;
+}
+
+.carousel-arrow.right {
+  right: 12px;
+}
+
+.carousel-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background: #111111;
+  border-color: #111111;
+}
+
+@media (max-width: 768px) {
+  .carousel-slide {
+    height: 320px;
+  }
+  .carousel-title {
+    font-size: 18px;
+  }
+}
+
+.carousel {
+  margin: 24px 0 0;
+}
+
+.carousel-inner {
+  position: relative;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.carousel-slide {
+  position: relative;
+  width: 100%;
+  height: 420px;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #f0f0f0;
+}
+
+.carousel-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9e9e9e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  padding: 16px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.carousel-title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+}
+
+.carousel-subtitle {
+  margin: 0;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.carousel-cta {
+  margin-top: 12px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.carousel-arrow.left {
+  left: 12px;
+}
+
+.carousel-arrow.right {
+  right: 12px;
+}
+
+.carousel-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background: #111111;
+  border-color: #111111;
+}
+
+@media (max-width: 768px) {
+  .carousel-slide {
+    height: 320px;
+  }
+  .carousel-title {
+    font-size: 18px;
+  }
+}
+
+
