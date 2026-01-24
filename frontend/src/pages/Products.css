@@ -21,9 +21,9 @@
 }
 
 .filter-btn {
-  background: transparent;
-  border: 2px solid #00d4ff;
-  color: #00d4ff;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  color: #111111;
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
@@ -33,14 +33,13 @@
 }
 
 .filter-btn:hover {
-  background: rgba(0, 212, 255, 0.2);
-  box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+  background: #f0f0f0;
 }
 
 .filter-btn.active {
-  background: #00d4ff;
-  color: #000000;
-  box-shadow: 0 0 20px #00d4ff;
+  background: #111111;
+  color: #ffffff;
+  border-color: #111111;
 }
 
 .products-grid {
@@ -51,24 +50,26 @@
 
 .product-card {
   text-decoration: none;
-  color: #00d4ff;
+  color: #111111;
   transition: all 0.3s ease;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 30px #00d4ff, 0 0 60px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .product-image {
   width: 100%;
   height: 250px;
   overflow: hidden;
-  background: rgba(0, 212, 255, 0.1);
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +87,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: rgba(0, 212, 255, 0.5);
+  color: #9e9e9e;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -114,13 +115,6 @@
   flex-grow: 1;
 }
 
-.product-price {
-  font-size: 24px;
-  font-weight: bold;
-  color: #00d4ff;
-  text-shadow: 0 0 10px #00d4ff;
-  margin-top: auto;
-}
 
 .loading,
 .no-products {

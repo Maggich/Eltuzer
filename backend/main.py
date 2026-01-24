@@ -11,11 +11,12 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 from database import SessionLocal, Base, engine
-from models import Product, Category, User
+from models import Product, Category, User, Slide
 from schemas import (
     ProductCreate, ProductResponse, ProductUpdate,
     CategoryCreate, CategoryResponse,
-    UserCreate, Token, UserResponse
+    UserCreate, Token, UserResponse,
+    SlideCreate, SlideResponse, SlideUpdate
 )
 
 Base.metadata.create_all(bind=engine)
@@ -293,6 +294,85 @@ def delete_category(
     db.delete(db_category)
     db.commit()
     return {"message": "Category deleted"}
+
+
+# Slides (carousel) endpoints
+@app.get("/api/slides", response_model=List[SlideResponse])
+def get_slides(active_only: bool = True, db: Session = Depends(get_db)):
+    query = db.query(Slide)
+    if active_only:
+        query = query.filter(Slide.is_active == True)  # noqa: E712
+    slides = query.order_by(Slide.order.asc(), Slide.id.asc()).all()
+    return slides
+
+
+@app.post("/api/slides", response_model=SlideResponse)
+def create_slide(
+    slide: SlideCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    db_slide = Slide(**slide.dict())
+    db.add(db_slide)
+    db.commit()
+    db.refresh(db_slide)
+    return db_slide
+
+
+@app.put("/api/slides/{slide_id}", response_model=SlideResponse)
+def update_slide(
+    slide_id: int,
+    slide: SlideUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    db_slide = db.query(Slide).filter(Slide.id == slide_id).first()
+    if db_slide is None:
+        raise HTTPException(status_code=404, detail="Slide not found")
+    for key, value in slide.dict(exclude_unset=True).items():
+        setattr(db_slide, key, value)
+    db.commit()
+    db.refresh(db_slide)
+    return db_slide
+
+
+@app.delete("/api/slides/{slide_id}")
+def delete_slide(
+    slide_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    db_slide = db.query(Slide).filter(Slide.id == slide_id).first()
+    if db_slide is None:
+        raise HTTPException(status_code=404, detail="Slide not found")
+    if db_slide.image_url and os.path.exists(db_slide.image_url):
+        os.remove(db_slide.image_url)
+    db.delete(db_slide)
+    db.commit()
+    return {"message": "Slide deleted"}
+
+
+@app.post("/api/slides/{slide_id}/upload", response_model=SlideResponse)
+async def upload_slide_image(
+    slide_id: int,
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    db_slide = db.query(Slide).filter(Slide.id == slide_id).first()
+    if db_slide is None:
+        raise HTTPException(status_code=404, detail="Slide not found")
+
+    file_extension = os.path.splitext(file.filename)[1]
+    filename = f"slide_{slide_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}{file_extension}"
+    file_path = os.path.join(UPLOAD_DIR, filename)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    db_slide.image_url = f"uploads/{filename}"
+    db.commit()
+    db.refresh(db_slide)
+    return db_slide
 
 
 @app.get("/")

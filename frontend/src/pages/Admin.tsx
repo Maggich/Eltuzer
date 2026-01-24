@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { productApi, categoryApi, Product, Category } from '../services/api';
+import { productApi, categoryApi, slideApi, Product, Category } from '../services/api';
 import './Admin.css';
 
 const Admin: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [activeTab, setActiveTab] = useState<'products' | 'categories'>('products');
+  const [slides, setSlides] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<'products' | 'categories' | 'slides'>('products');
   const [loading, setLoading] = useState(true);
   const [showProductForm, setShowProductForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const [showSlideForm, setShowSlideForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingSlide, setEditingSlide] = useState<any | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,12 +29,14 @@ const Admin: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const [productsRes, categoriesRes] = await Promise.all([
+      const [productsRes, categoriesRes, slidesRes] = await Promise.all([
         productApi.getAll(),
         categoryApi.getAll(),
+        slideApi.getAll(false),
       ]);
       setProducts(productsRes.data);
       setCategories(categoriesRes.data);
+      setSlides(slidesRes.data);
     } catch (error: any) {
       if (error.response?.status === 401) {
         localStorage.removeItem('token');
@@ -62,6 +67,16 @@ const Admin: React.FC = () => {
     }
   };
 
+  const handleDeleteSlide = async (id: number) => {
+    if (!window.confirm('Вы уверены, что хотите удалить этот слайд?')) return;
+    try {
+      await slideApi.delete(id);
+      fetchData();
+    } catch (error) {
+      alert('Ошибка при удалении слайда');
+    }
+  };
+
   if (loading) {
     return (
       <div className="admin">
@@ -88,6 +103,12 @@ const Admin: React.FC = () => {
             onClick={() => setActiveTab('categories')}
           >
             Категории
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'slides' ? 'active' : ''}`}
+            onClick={() => setActiveTab('slides')}
+          >
+            Карусель
           </button>
         </div>
 
@@ -231,6 +252,76 @@ const Admin: React.FC = () => {
             </div>
           </div>
         )}
+
+        {activeTab === 'slides' && (
+          <div className="admin-section">
+            <div className="section-header">
+              <h2>Карусель</h2>
+              <button
+                className="btn-primary"
+                onClick={() => {
+                  setEditingSlide(null);
+                  setShowSlideForm(true);
+                }}
+              >
+                + Добавить слайд
+              </button>
+            </div>
+
+            {showSlideForm && (
+              <SlideForm
+                slide={editingSlide}
+                onClose={() => {
+                  setShowSlideForm(false);
+                  setEditingSlide(null);
+                }}
+                onSuccess={() => {
+                  setShowSlideForm(false);
+                  setEditingSlide(null);
+                  fetchData();
+                }}
+              />
+            )}
+
+            <div className="admin-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Порядок</th>
+                    <th>Активен</th>
+                    <th>Действия</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {slides.map((s) => (
+                    <tr key={s.id}>
+                      <td>{s.id}</td>
+                      <td>{s.title || '-'}</td>
+                      <td>{s.order}</td>
+                      <td>{s.is_active ? 'Да' : 'Нет'}</td>
+                      <td>
+                        <button
+                          className="btn-edit"
+                          onClick={() => {
+                            setEditingSlide(s);
+                            setShowSlideForm(true);
+                          }}
+                        >
+                          Редактировать
+                        </button>
+                        <button className="btn-delete" onClick={() => handleDeleteSlide(s.id)}>
+                          Удалить
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -250,8 +341,6 @@ const ProductForm: React.FC<{
   const [categoryId, setCategoryId] = useState(product?.category_id?.toString() || '');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showQuickCategoryForm, setShowQuickCategoryForm] = useState(false);
-  const [quickCategoryName, setQuickCategoryName] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -414,6 +503,115 @@ const CategoryForm: React.FC<{
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
             />
+          </div>
+          <div className="form-actions">
+            <button type="button" className="btn-secondary" onClick={onClose}>
+              Отмена
+            </button>
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? 'Сохранение...' : 'Сохранить'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// Slide Form Component
+const SlideForm: React.FC<{
+  slide: any | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}> = ({ slide, onClose, onSuccess }) => {
+  const [title, setTitle] = useState(slide?.title || '');
+  const [subtitle, setSubtitle] = useState(slide?.subtitle || '');
+  const [linkUrl, setLinkUrl] = useState(slide?.link_url || '');
+  const [order, setOrder] = useState<string>(String(slide?.order ?? 0));
+  const [isActive, setIsActive] = useState<boolean>(slide?.is_active ?? true);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const slideData = {
+        title: title || null,
+        subtitle: subtitle || null,
+        link_url: linkUrl || null,
+        order: parseInt(order || '0', 10),
+        is_active: isActive,
+      };
+
+      let saved;
+      if (slide) {
+        saved = await slideApi.update(slide.id, slideData);
+      } else {
+        saved = await slideApi.create(slideData);
+      }
+
+      if (imageFile && saved.data) {
+        await slideApi.uploadImage(saved.data.id, imageFile);
+      }
+
+      onSuccess();
+    } catch (error) {
+      alert('Ошибка при сохранении слайда');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2>{slide ? 'Редактировать слайд' : 'Добавить слайд'}</h2>
+        <form onSubmit={handleSubmit} className="admin-form">
+          <div className="form-group">
+            <label>Заголовок</label>
+            <input className="input-field" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Подзаголовок</label>
+            <textarea
+              className="input-field"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              rows={3}
+            />
+          </div>
+          <div className="form-group">
+            <label>Ссылка (необязательно)</label>
+            <input
+              className="input-field"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="https://..."
+            />
+          </div>
+          <div className="form-group">
+            <label>Порядок</label>
+            <input
+              type="number"
+              className="input-field"
+              value={order}
+              onChange={(e) => setOrder(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <input
+                type="checkbox"
+                checked={isActive}
+                onChange={(e) => setIsActive(e.target.checked)}
+              />
+              Активен
+            </label>
+          </div>
+          <div className="form-group">
+            <label>Изображение</label>
+            <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
           </div>
           <div className="form-actions">
             <button type="button" className="btn-secondary" onClick={onClose}>

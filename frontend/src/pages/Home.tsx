@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { categoryApi, productApi, Product } from '../services/api';
+import { categoryApi, productApi, slideApi, Product } from '../services/api';
+import Carousel from '../components/Carousel';
 import './Home.css';
 
 const Home: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [slides, setSlides] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsRes, categoriesRes] = await Promise.all([
+        const [productsRes, categoriesRes, slidesRes] = await Promise.all([
           productApi.getAll(),
           categoryApi.getAll(),
+          slideApi.getAll(true),
         ]);
         setFeaturedProducts(productsRes.data.slice(0, 6));
         setCategories(categoriesRes.data);
+        setSlides(slidesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -28,12 +32,28 @@ const Home: React.FC = () => {
 
   return (
     <div className="home">
+      <div className="container">
+        <Carousel slides={slides} />
+      </div>
       <section className="hero">
         <div className="container">
           <div className="hero-content">
-            <h1 className="hero-title glow-text">EL TUZER</h1>
-            <div className="hero-line"></div>
-            <p className="hero-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</p>
+            <img
+              src="/logo-eltuzer.png"
+              alt="EL TUZER — студия мебели и салона"
+              className="hero-logo-image"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.insertAdjacentHTML(
+                    'afterbegin',
+                    '<div class="hero-logo-fallback"><div class="logo-text">EL TUZER</div><div class="logo-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</div></div>'
+                  );
+                }
+              }}
+            />
             <p className="hero-description">
               Создаем мебель для вашего комфорта и стиля
             </p>
@@ -96,7 +116,9 @@ const Home: React.FC = () => {
                   </div>
                   <div className="product-info">
                     <h3>{product.name}</h3>
-                    <p className="product-price">{product.price.toLocaleString()} ₽</p>
+                    {product.description && (
+                      <p className="product-description">{product.description}</p>
+                    )}
                   </div>
                 </Link>
               ))}

@@ -1,7 +1,7 @@
 .header {
-  background: rgba(0, 0, 0, 0.9);
-  border-bottom: 2px solid #00d4ff;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -16,10 +16,22 @@
 
 .logo {
   text-decoration: none;
-  color: #00d4ff;
+  color: #111111;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo-image {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
+.logo-fallback {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 4px;
 }
 
 .logo-text {
@@ -28,21 +40,22 @@
   letter-spacing: 3px;
   margin: 0;
   text-transform: uppercase;
+  font-family: 'Times New Roman', 'Georgia', serif;
 }
 
 .logo-line {
   width: 100%;
   height: 2px;
-  background: #00d4ff;
+  background: #111111;
   margin: 8px 0;
-  box-shadow: 0 0 10px #00d4ff;
 }
 
 .logo-subtitle {
   font-size: 12px;
   margin: 0;
   letter-spacing: 2px;
-  opacity: 0.9;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
 .nav {
@@ -52,7 +65,7 @@
 }
 
 .nav-link {
-  color: #00d4ff;
+  color: #111111;
   text-decoration: none;
   font-size: 16px;
   text-transform: uppercase;
@@ -72,9 +85,8 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: #00d4ff;
+  background: #111111;
   transition: width 0.3s ease;
-  box-shadow: 0 0 10px #00d4ff;
 }
 
 .nav-link:hover::after {
@@ -82,7 +94,7 @@
 }
 
 .nav-link:hover {
-  text-shadow: 0 0 10px #00d4ff;
+  color: #000000;
 }
 
 .btn-logout {
@@ -102,9 +114,8 @@
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background: #00d4ff;
+  background: #111111;
   transition: all 0.3s ease;
-  box-shadow: 0 0 5px #00d4ff;
 }
 
 @media (max-width: 768px) {
@@ -117,12 +128,12 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.98);
+    background: #ffffff;
     flex-direction: column;
     padding: 20px;
     gap: 20px;
-    border-top: 2px solid #00d4ff;
-    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
@@ -143,6 +154,10 @@
     font-size: 10px;
   }
 }
+
+
+
+
 
 
 

@@ -90,7 +90,6 @@ const Products: React.FC = () => {
                   {product.description && (
                     <p className="product-description">{product.description}</p>
                   )}
-                  <p className="product-price">{product.price.toLocaleString()} ₽</p>
                 </div>
               </Link>
             ))}

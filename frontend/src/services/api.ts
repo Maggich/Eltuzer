@@ -44,6 +44,18 @@ export interface User {
   created_at: string;
 }
 
+export interface Slide {
+  id: number;
+  title: string | null;
+  subtitle: string | null;
+  link_url: string | null;
+  image_url: string | null;
+  order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export const productApi = {
   getAll: (categoryId?: number) => 
     api.get<Product[]>('/api/products', { params: { category_id: categoryId } }),
@@ -68,6 +80,21 @@ export const categoryApi = {
   update: (id: number, data: Partial<Category>) => 
     api.put<Category>(`/api/categories/${id}`, data),
   delete: (id: number) => api.delete(`/api/categories/${id}`),
+};
+
+export const slideApi = {
+  getAll: (activeOnly: boolean = true) =>
+    api.get<Slide[]>('/api/slides', { params: { active_only: activeOnly } }),
+  create: (data: Partial<Slide>) => api.post<Slide>('/api/slides', data),
+  update: (id: number, data: Partial<Slide>) => api.put<Slide>(`/api/slides/${id}`, data),
+  delete: (id: number) => api.delete(`/api/slides/${id}`),
+  uploadImage: (id: number, file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post<Slide>(`/api/slides/${id}/upload`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
 
 export const authApi = {

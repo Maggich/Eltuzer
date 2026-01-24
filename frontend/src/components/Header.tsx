@@ -5,6 +5,7 @@ import './Header.css';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,9 +24,19 @@ const Header: React.FC = () => {
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo">
-            <h1 className="logo-text glow-text">EL TUZER</h1>
-            <div className="logo-line"></div>
-            <p className="logo-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</p>
+            {!logoError ? (
+              <img
+                src="/logo-eltuzer.png"
+                alt="EL TUZER — студия мебели и салона"
+                className="logo-image"
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <div className="logo-fallback">
+                <span className="logo-text">EL TUZER</span>
+                <span className="logo-subtitle">СТУДИЯ МЕБЕЛИ & САЛОНА</span>
+              </div>
+            )}
           </Link>
           
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>

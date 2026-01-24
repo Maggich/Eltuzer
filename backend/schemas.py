@@ -72,6 +72,41 @@ class ProductResponse(ProductBase):
         from_attributes = True
 
 
+class SlideBase(BaseModel):
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    link_url: Optional[str] = None
+    order: int = 0
+    is_active: bool = True
+
+
+class SlideCreate(SlideBase):
+    image_url: Optional[str] = None
+
+
+class SlideUpdate(BaseModel):
+    title: Optional[str] = None
+    subtitle: Optional[str] = None
+    link_url: Optional[str] = None
+    image_url: Optional[str] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
+
+
+class SlideResponse(SlideBase):
+    id: int
+    image_url: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+
+
+
+
 
 
 

@@ -4,7 +4,7 @@
 }
 
 .back-link {
-  color: #00d4ff;
+  color: #111111;
   text-decoration: none;
   display: inline-block;
   margin-bottom: 30px;
@@ -13,7 +13,7 @@
 }
 
 .back-link:hover {
-  text-shadow: 0 0 10px #00d4ff;
+  color: #000000;
   transform: translateX(-5px);
 }
 
@@ -29,11 +29,11 @@
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 10px;
-  background: rgba(0, 212, 255, 0.1);
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .product-detail-image img {
@@ -43,7 +43,7 @@
 }
 
 .no-image {
-  color: rgba(0, 212, 255, 0.5);
+  color: #9e9e9e;
   font-size: 18px;
 }
 
@@ -63,8 +63,7 @@
 .product-detail-line {
   width: 200px;
   height: 2px;
-  background: #00d4ff;
-  box-shadow: 0 0 10px #00d4ff;
+  background: #111111;
   margin: 10px 0;
 }
 
@@ -82,13 +81,6 @@
   margin: 20px 0;
 }
 
-.product-detail-price {
-  font-size: 36px;
-  font-weight: bold;
-  color: #00d4ff;
-  text-shadow: 0 0 15px #00d4ff;
-  margin: 20px 0;
-}
 
 .btn-contact {
   margin-top: 20px;
@@ -111,10 +103,176 @@
   .product-detail-title {
     font-size: 36px;
   }
+}
 
-  .product-detail-price {
-    font-size: 28px;
+/* Модальное окно для формы связи */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 0;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
   }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+
+.modal-subtitle {
+  color: #666;
+  margin: 0 0 24px;
+  padding: 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contact-form {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-form label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.contact-form .input-field {
+  background: #ffffff;
+  border: 2px solid #e1e1e1;
+  color: #333;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.contact-form .input-field:focus {
+  border-color: #333;
+  box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.1);
+}
+
+.contact-form .input-field::placeholder {
+  color: #999;
+}
+
+.contact-form textarea.input-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.form-actions .btn-secondary {
+  background: transparent;
+  border: 2px solid #ddd;
+  color: #666;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-actions .btn-secondary:hover {
+  border-color: #bbb;
+  color: #333;
+}
+
+.form-actions .btn-primary {
+  background: #333;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-actions .btn-primary:hover {
+  background: #555;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
@@ -126,10 +284,23 @@
     font-size: 28px;
   }
 
-  .product-detail-price {
-    font-size: 24px;
+  .modal-content {
+    margin: 10px;
+    max-width: none;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
   }
 }
+
+
+
+
 
 
 
